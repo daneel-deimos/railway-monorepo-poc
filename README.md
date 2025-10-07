@@ -96,7 +96,7 @@ npm run railway:setup
 
 **Time to deploy:** ~5 minutes (2 manual steps required)
 
-**For detailed instructions, see [Railway Installation Guide](docs/railway/RAILWAY_INSTALLATION_GUIDE.md)**
+**For detailed instructions, see [Railway Installation Guide](docs/railway/railway-installation-guide.md)**
 
 ### Manual Deployment
 
@@ -110,7 +110,7 @@ If you prefer manual setup:
 6. Connect GitHub repository
 7. Push to deploy: `git push origin main`
 
-**See [Railway Installation Guide](docs/railway/RAILWAY_INSTALLATION_GUIDE.md) for step-by-step instructions.**
+**See [Railway Installation Guide](docs/railway/railway-installation-guide.md) for step-by-step instructions.**
 
 ### Deployment Monitoring
 
@@ -135,7 +135,7 @@ The setup script automatically configures these in Railway:
 
 ### Additional Resources
 
-- **Installation Guide**: [docs/railway/RAILWAY_INSTALLATION_GUIDE.md](docs/railway/RAILWAY_INSTALLATION_GUIDE.md)
+- **Installation Guide**: [docs/railway/railway-installation-guide.md](docs/railway/railway-installation-guide.md)
 - **Best Practices**: [docs/railway/railway-poc-best-practices.md](docs/railway/railway-poc-best-practices.md)
 - **Railway Docs**: [docs.railway.app](https://docs.railway.app)
 
