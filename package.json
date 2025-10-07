@@ -17,7 +17,7 @@
     "dev:server": "cd server && npm run dev",
     "dev": "npm run dev:server & npm run dev:client",
     "build": "npm run build --workspace=client",
-    "start": "cd server && npm start",
+    "start": "NODE_ENV=production cd server && npm start",
     "railway:setup": "./scripts/railway-setup.sh",
     "railway:logs": "npx railway logs -f"
   },

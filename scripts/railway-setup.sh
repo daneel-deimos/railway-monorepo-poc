@@ -263,33 +263,32 @@ log_success "Railway project linked"
 
 log_step "Step 5: Environment Variables Configuration"
 
-# Set required environment variables
-log_info "Setting Railway environment variables..."
+# Create .env file for Railway to read during deployment
+log_info "Creating .env file for Railway deployment..."
 
-REQUIRED_VARS=(
-    "NODE_ENV=production"
-    "RAILPACK_PACKAGES=nodejs@22.13.0"
-    "NO_CACHE=1"
-)
+if [ "$DRY_RUN" = false ]; then
+    # Start with required variables
+    cat > .env <<EOF
+# Railway Environment Variables
+# This file is automatically read by Railway during deployment
+NODE_ENV=production
+RAILPACK_PACKAGES=nodejs@22.13.0
+NO_CACHE=1
+EOF
 
-for var in "${REQUIRED_VARS[@]}"; do
-    log_info "Setting: $var"
-    if [ "$DRY_RUN" = false ]; then
-        npx railway variables --set "$var" >> "$LOG_FILE" 2>&1 || log_warning "Failed to set $var"
-    fi
-done
+    # Append custom variables from .env.example
+    for var in "${ENV_VARS[@]}"; do
+        if [[ "$var" == NODE_ENV=* ]] || [[ "$var" == PORT=* ]]; then
+            continue  # Skip already set variables
+        fi
+        echo "$var" >> .env
+    done
 
-# Set custom environment variables from .env.example
-for var in "${ENV_VARS[@]}"; do
-    if [[ "$var" == NODE_ENV=* ]] || [[ "$var" == PORT=* ]]; then
-        continue  # Skip already set variables
-    fi
-
-    log_info "Setting custom variable: $var"
-    if [ "$DRY_RUN" = false ]; then
-        npx railway variables --set "$var" >> "$LOG_FILE" 2>&1 || log_warning "Failed to set $var"
-    fi
-done
+    log_success ".env file created with ${#ENV_VARS[@]} custom variable(s)"
+    log_info "Railway will automatically read this file during deployment"
+else
+    log_info "[DRY RUN] Would create .env file with required and custom variables"
+fi
 
 log_success "Environment variables configured"
 
@@ -427,12 +426,19 @@ fi
 
 log_step "Step 11: Cleanup"
 
-# Remove NO_CACHE after first deployment
-log_info "Removing NO_CACHE environment variable..."
+# Remove NO_CACHE from .env file after first deployment
+log_info "Removing NO_CACHE from .env file..."
 if [ "$DRY_RUN" = false ]; then
-    npx railway variables --unset NO_CACHE >> "$LOG_FILE" 2>&1 || log_warning "Could not remove NO_CACHE"
+    if [ -f ".env" ]; then
+        sed -i.bak '/^NO_CACHE=/d' .env && rm -f .env.bak
+        log_success "NO_CACHE removed from .env (future deployments will use cache)"
+        log_info "Commit and push the updated .env file for changes to take effect"
+    else
+        log_warning ".env file not found, skipping NO_CACHE removal"
+    fi
+else
+    log_info "[DRY RUN] Would remove NO_CACHE from .env file"
 fi
-log_success "NO_CACHE removed (future deployments will use cache)"
 
 log_step "Setup Complete!"
 
@@ -454,7 +460,7 @@ echo -e "${BLUE}🔧 Next Steps:${NC}"
 echo ""
 echo "  • Monitor logs:        npm run railway:logs"
 echo "  • View deployments:    npx railway status"
-echo "  • Update environment:  npx railway variables"
+echo "  • Update environment:  Edit .env file and commit/push changes"
 echo "  • Open dashboard:      npx railway open"
 echo ""
 echo -e "${YELLOW}💡 Tips:${NC}"

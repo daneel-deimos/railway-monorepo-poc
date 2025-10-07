@@ -1,9 +1,12 @@
 # Issue #01: Railway CLI fails to set environment variables
 
 ## Status
-Open
+Fixed
 
 ## Date Reported
+2025-10-07
+
+## Date Fixed
 2025-10-07
 
 ## Description
