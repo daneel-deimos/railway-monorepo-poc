@@ -44,7 +44,12 @@ cd railway-monorepo-poc
 
 # Install all dependencies (root + workspaces)
 npm run init
+
+# Starts up the server and clients projects
+npm run dev
 ```
+
+Visit [http://localhost:4444](http://localhost:4444) to view the app.
 
 ### Development
 

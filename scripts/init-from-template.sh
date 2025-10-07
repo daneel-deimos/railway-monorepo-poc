@@ -15,13 +15,17 @@ if [ -z "$REPO_NAME" ]; then
   exit 1
 fi
 
+# Convert to package.json format (lowercase, spaces to dashes)
+PKG_NAME=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
 echo ""
-echo "Updating files with repo name: $REPO_NAME"
+echo "Display name: $REPO_NAME"
+echo "Package name: $PKG_NAME"
 echo ""
 
 # Update root package.json
 if [ -f "package.json" ]; then
-  sed -i '' "s/\"name\": \"railway-monorepo-poc\"/\"name\": \"$REPO_NAME\"/" package.json
+  sed -i '' "s/\"name\": \"railway-monorepo-poc\"/\"name\": \"$PKG_NAME\"/" package.json
   echo "✅ Updated package.json"
 fi
 
