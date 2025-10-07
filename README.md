@@ -14,6 +14,22 @@ railway-monorepo-poc/
 
 ## Quick Start
 
+### Using this Template
+
+If you created your repo from this template:
+
+```bash
+# 1. Clone your new repository
+git clone <your-repo-url>
+cd <your-repo-name>
+
+# 2. Initialize from template (updates repo name references)
+./scripts/init-from-template.sh
+
+# 3. Install all dependencies (root + workspaces)
+npm run init
+```
+
 ### Prerequisites
 
 - Node.js 22.13.0+ (specified in `.nvmrc`)
@@ -23,7 +39,7 @@ railway-monorepo-poc/
 
 ```bash
 # Clone the repository
-git clone https://github.com/daneel-deimos/railway-monorepo-poc
+git clone <this repo URL>
 cd railway-monorepo-poc
 
 # Install all dependencies (root + workspaces)
