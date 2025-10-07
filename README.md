@@ -62,7 +62,7 @@ NODE_ENV=production npm start
 
 ## Railway Deployment
 
-This project follows Railway best practices:
+This project is optimized for Railway deployment with production-ready features:
 
 - ✅ Compression enabled (80% bandwidth reduction)
 - ✅ Cache headers on API routes
@@ -72,7 +72,64 @@ This project follows Railway best practices:
 - ✅ Node version pinning (22.13.0)
 - ✅ Monorepo workspace structure
 
-See [docs/railway/railway-poc-best-practices.md](docs/railway/railway-poc-best-practices.md) for detailed deployment instructions.
+### Quick Deploy
+
+Deploy to Railway using our automated setup script:
+
+```bash
+npm run railway:setup
+```
+
+The script will:
+1. Check prerequisites and install Railway CLI
+2. Authenticate with Railway
+3. Create and configure your project
+4. Set environment variables automatically
+5. Guide you through required manual actions
+6. Deploy and verify your application
+
+**📖 For detailed instructions, see [Railway Installation Guide](docs/railway/RAILWAY_INSTALLATION_GUIDE.md)**
+
+### Manual Deployment
+
+If you prefer manual setup:
+
+1. Install Railway CLI: `npm install --save-dev @railway/cli`
+2. Authenticate: `npx railway login`
+3. Create project: `npx railway init`
+4. Set environment variables (see below)
+5. Enable public networking in Railway Dashboard
+6. Connect GitHub repository
+7. Push to deploy: `git push origin main`
+
+**See [Railway Installation Guide](docs/railway/RAILWAY_INSTALLATION_GUIDE.md) for step-by-step instructions.**
+
+### Deployment Monitoring
+
+```bash
+# View deployment logs
+npm run railway:logs
+
+# Check deployment status
+npx railway status
+
+# Open Railway Dashboard
+npx railway open
+```
+
+### Required Environment Variables
+
+The setup script automatically configures these in Railway:
+
+- `NODE_ENV=production`
+- `RAILPACK_PACKAGES=nodejs@22.13.0`
+- Custom variables from `server/.env.example`
+
+### Additional Resources
+
+- **Installation Guide**: [docs/railway/RAILWAY_INSTALLATION_GUIDE.md](docs/railway/RAILWAY_INSTALLATION_GUIDE.md)
+- **Best Practices**: [docs/railway/railway-poc-best-practices.md](docs/railway/railway-poc-best-practices.md)
+- **Railway Docs**: [docs.railway.app](https://docs.railway.app)
 
 ## Environment Variables
 
@@ -87,9 +144,13 @@ PORT=3333
 
 ### Railway Production
 
-Set in Railway Dashboard:
-- `NODE_ENV=production`
-- `RAILPACK_PACKAGES=nodejs@22.13.0`
+Environment variables are automatically set by `npm run railway:setup`.
+
+To add custom variables, edit `server/.env.example` before running the setup script, or set them manually:
+
+```bash
+npx railway variables --set KEY=value
+```
 
 ## Tech Stack
 
