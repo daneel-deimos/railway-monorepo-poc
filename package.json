@@ -1,0 +1,25 @@
+{
+  "name": "railway-monorepo-poc",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10.0.0"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "init": "npm install && npm install --workspace=client && npm install --workspace=server",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "npm run dev:server & npm run dev:client",
+    "build": "npm run build --workspace=client",
+    "start": "cd server && npm start"
+  },
+  "devDependencies": {
+    "@railway/cli": "^4.10.0"
+  }
+}

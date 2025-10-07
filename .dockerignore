@@ -1,0 +1,36 @@
+# Source control
+.git/
+.github/
+
+# Documentation (exclude from builds)
+docs/
+*.md
+!README.md
+
+# Development files
+.vscode/
+.idea/
+.DS_Store
+
+# Node modules (will be reinstalled)
+node_modules/
+*/node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# Logs and temp files
+*.log
+tmp/
+temp/
+
+# Large data directories
+data-backups/
+downloads/
+uploads/
+
+# Test files (if large)
+*.test.js
+*.spec.js
+__tests__/
