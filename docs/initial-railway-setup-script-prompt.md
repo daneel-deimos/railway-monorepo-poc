@@ -216,6 +216,7 @@ The script should be idempotent where possible and provide helpful error message
 ### Key Learnings During Implementation
 
 1. **Terser Dependency**: Vite 6+ requires `terser` to be explicitly installed when using `minify: 'terser'` in the config.
+   - Add to `client/package.json`: `"terser": "^5.36.0"`
 
 2. **Railway Logs Command**: The Railway CLI `logs` command doesn't support `--follow` syntax. Use `timeout` to prevent the script from hanging.
 
@@ -224,6 +225,27 @@ The script should be idempotent where possible and provide helpful error message
 4. **Correct Deployment Flow**:
    - ❌ Wrong: Create project → Enable networking → Connect GitHub → Deploy
    - ✅ Right: Create project → Connect GitHub → Deploy (creates service) → Enable networking
+
+5. **Railway Build Configuration**:
+   - **IMPORTANT**: Use `npm install` instead of `npm ci` in Railway builds to avoid EBUSY lock errors on cached directories like `.vite`
+   - The `npm ci` command can fail with `EBUSY: resource busy or locked` errors when Railway's build cache contains locked directories
+   - `npm install` is more resilient and handles cached node_modules better in Railway's containerized environment
+   - Correct build command: `npm install && npm run build --workspace=client`
+   - Start command should be direct: `node server/index.js` (not `cd server && npm start`)
+   - Railway.json example:
+     ```json
+     {
+       "build": {
+         "builder": "RAILPACK",
+         "buildCommand": "npm install && npm run build --workspace=client"
+       },
+       "deploy": {
+         "startCommand": "node server/index.js"
+       }
+     }
+     ```
+
+6. **Public Networking Port**: When enabling public networking in Railway Dashboard, enter `3333` as the port (matches your server's default port)
 
 ### Testing the Script
 
