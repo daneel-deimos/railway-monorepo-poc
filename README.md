@@ -19,9 +19,13 @@ railway-monorepo-poc/
 - Node.js 22.13.0+ (specified in `.nvmrc`)
 - npm 10.0.0+
 
-### Installation
+### Local Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/daneel-deimos/railway-monorepo-poc
+cd railway-monorepo-poc
+
 # Install all dependencies (root + workspaces)
 npm run init
 ```
@@ -72,7 +76,7 @@ This project is optimized for Railway deployment with production-ready features:
 - ✅ Node version pinning (22.13.0)
 - ✅ Monorepo workspace structure
 
-### Quick Deploy
+### Automated Railway Setup
 
 Deploy to Railway using our automated setup script:
 
@@ -80,15 +84,19 @@ Deploy to Railway using our automated setup script:
 npm run railway:setup
 ```
 
-The script will:
-1. Check prerequisites and install Railway CLI
-2. Authenticate with Railway
-3. Create and configure your project
-4. Set environment variables automatically
-5. Guide you through required manual actions
-6. Deploy and verify your application
+**What the script does:**
+1. Checks prerequisites and installs Railway CLI
+2. Authenticates with Railway (opens browser)
+3. Creates and configures your Railway project
+4. Sets environment variables automatically from `server/.env.example`
+5. Prompts you to connect GitHub repository in Railway Dashboard
+6. Prompts you to enable public networking (port 3333)
+7. Monitors deployment and displays logs
+8. Verifies deployment and provides your app URL
 
-**📖 For detailed instructions, see [Railway Installation Guide](docs/railway/RAILWAY_INSTALLATION_GUIDE.md)**
+**Time to deploy:** ~5 minutes (2 manual steps required)
+
+**For detailed instructions, see [Railway Installation Guide](docs/railway/RAILWAY_INSTALLATION_GUIDE.md)**
 
 ### Manual Deployment
 
